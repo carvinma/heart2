@@ -65,7 +65,7 @@ namespace strike_subsystem
         {
             this.name = name;
             string time = DateTime.Now.ToFileTime().ToString();
-            videoPath = name + time + ".WMV";
+            videoPath = name + time + ".AVI";
             vcap.CapFilename = "video\\" + videoPath;
             vcap.SetVideoFormat(640, 480);
             ratePath = name + time + ".txt";
@@ -115,8 +115,7 @@ namespace strike_subsystem
             
             this.begincap();
            timer1.Start();
-            //this.begincap();
-           
+            
         }
         private void renderRate()
         {
