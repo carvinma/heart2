@@ -67,6 +67,7 @@ namespace strike_subsystem
             string time = DateTime.Now.ToFileTime().ToString();
             videoPath = name + time + ".WMV";
             vcap.CapFilename = "video\\" + videoPath;
+            vcap.SetVideoFormat(640, 480);
             ratePath = name + time + ".txt";
             sw = new StreamWriter("data\\" + ratePath);
             string sql=string.Format("insert into videoRate(UserName,videoPath,ratePath)values('{0}','{1}','{2}')",name,videoPath,ratePath);
@@ -304,16 +305,27 @@ namespace strike_subsystem
 
         private void button1_Click_1(object sender, EventArgs e)
         {
-            string sql = string.Format("update videoRate");
-            _userConn.Open();
-            OleDbCommand cmd = new OleDbCommand("Update videoRate set avgRate = '" + cavgRate + "',daixie="+daixie+" where UserName='"+name+"'", _userConn);
+            if (button3.Text == "数据全屏")
+            {
+                string sql = string.Format("update videoRate");
+                _userConn.Open();
+                OleDbCommand cmd = new OleDbCommand("Update videoRate set avgRate = '" + cavgRate + "',daixie=" + daixie + " where UserName='" + name + "'", _userConn);
 
-            int res = cmd.ExecuteNonQuery();
-            _userConn.Close();
-            Sp.Close();
+                int res = cmd.ExecuteNonQuery();
+                _userConn.Close();
+                Sp.Close();
 
-            lastfrm.Show();
-            this.Close();
+                lastfrm.Show();
+                this.Close();
+            }
+            else
+            {
+                isFullScreen = !isFullScreen;
+                button3.Text = "数据全屏";
+                chart1.Location = l;
+                panel1.Visible = true;
+                chart1.Size = new System.Drawing.Size(520, 520);
+            }
            
         }
 
@@ -364,7 +376,7 @@ namespace strike_subsystem
                         {
                             int hr = sdata[5];
                             Array.Copy(sdata,0, data, 0, 6);
-                            updateView updateChart = new updateView(chartUpdate);
+                            updateView updateChart = new updateView(chartUpdate);  //此处修改获得即刻心率和平均心率
                             Invoke(updateChart, new object[] { i, hr });
                             i++;
                         }

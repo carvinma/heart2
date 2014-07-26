@@ -11,6 +11,7 @@ namespace strike_subsystem
 {
     public partial class analys : Form
     {
+        public Manage_p lastfrm;
         string name;
         string height;
         string sex;
@@ -91,7 +92,7 @@ namespace strike_subsystem
             chart1.ChartAreas[0].AxisX.ScrollBar.PositionInside=true;
             chart1.ChartAreas[0].AxisY.Minimum = 50;
             chart1.ChartAreas[0].AxisY.Maximum = 240;
-            
+            chart1.ChartAreas[1].AxisY.Minimum = 500;
             readData();
             //if (System.IO.File.Exists("video\\" + videoPath))
             //{
@@ -111,6 +112,7 @@ namespace strike_subsystem
 
         private void button1_Click(object sender, EventArgs e)
         {
+            lastfrm.Show();
             this.Close();
         }
 
