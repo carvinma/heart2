@@ -22,19 +22,19 @@ namespace strike_subsystem
         {
             InitializeComponent();
             Manage_p_BG.Image = Image.FromFile("Images\\Manage_P.jpg");
-            adp = new OleDbDataAdapter("select UserName as 姓名,Sex as 性别,Height as 身高,Weight as 体重,Birthday as 生日,Contacts as 联系方式,Remark as 备注"+
+            adp = new OleDbDataAdapter("select UserName as 姓名,Sex as 性别,Height as 身高,Weight as 体重,Birthday as 生日,Contacts as 联系方式,Remark as 备注" +
             " from UserInfo order by UserID desc", _userConn);
             adp.Fill(ds);
             DataList.DataSource = ds.Tables[0];
             DataList.Rows[0].Selected = true;
 
-           
-           
+
+
         }
 
         private void Manage_p_Load(object sender, EventArgs e)
         {
-           
+
         }
 
         private void Button_search_Click(object sender, EventArgs e)
@@ -54,7 +54,7 @@ namespace strike_subsystem
             else
                 MessageBox.Show("没有找到用户: " + sn + "  对不起");
             ds2.Dispose();
-            
+
 
         }
 
@@ -94,9 +94,9 @@ namespace strike_subsystem
                 }
 
                 _userConn.Open();
-          
-                OleDbCommand cmd = new OleDbCommand("Update UserInfo set Sex = '" + usersex.Trim() + "',Height = " + UHeight.Text.Trim() + ",Weight = " + UWeight.Text.Trim() + ",Birthday = '" + Birthday.Text.Trim() +"',Remark = '" + Remark.Text.Trim() + "' where UserName = '" + DataList[0, DataList.CurrentCell.RowIndex].Value + "'", _userConn);
-                
+
+                OleDbCommand cmd = new OleDbCommand("Update UserInfo set Sex = '" + usersex.Trim() + "',Height = " + UHeight.Text.Trim() + ",Weight = " + UWeight.Text.Trim() + ",Birthday = '" + Birthday.Text.Trim() + "',Remark = '" + Remark.Text.Trim() + "' where UserName = '" + DataList[0, DataList.CurrentCell.RowIndex].Value + "'", _userConn);
+
                 int res = cmd.ExecuteNonQuery();
                 if (res > 0)
                 {
@@ -127,7 +127,7 @@ namespace strike_subsystem
                     if (cmd.ExecuteNonQuery() > 0)
                     {
 
-                        if (ds.Tables[0].Rows.Count== 0)
+                        if (ds.Tables[0].Rows.Count == 0)
                         {
                             Main_Fram tForm = (Main_Fram)this.MdiParent;  //更改父窗口中用户数判断值
                             tForm.set_data_exist(false);
@@ -150,7 +150,7 @@ namespace strike_subsystem
                             adp.Fill(ds.Tables[0]);
                             DataList.DataSource = ds.Tables[0];
                             #endregion
-                        }  
+                        }
                     }
                     _userConn.Close();
                 }
@@ -200,8 +200,8 @@ namespace strike_subsystem
                 dataGridView1.DataSource = rateTable.Tables[0];
                 dataGridView1.Rows[0].Selected = true;
             }
-            
-            
+
+
         }
         private void UHeight_TextChanged(object sender, EventArgs e)
         {
@@ -220,22 +220,29 @@ namespace strike_subsystem
 
         private void dataGridView1_CellClick(object sender, DataGridViewCellEventArgs e)
         {
-            int  id = (int)dataGridView1[0, dataGridView1.CurrentCell.RowIndex].Value;
-            rateTable.Clear();
-            OleDbDataAdapter cadp=new OleDbDataAdapter("select * from videoRate where id="+id,_userConn);
-            cadp.Fill(rateTable);
-            DataRow dr=rateTable.Tables[0].Rows[0];
-            string v = (string)dr[8];
-            string r = (string)dr[9];
-            analys ans = new analys();
-            ans.setInfo(UserName.Text.Trim(), v, r);
-            //string sex=UserSex1.Checked
-            //ans.setMoreInfo()
-            ans.lastfrm = this;
-            ans.MdiParent = this.MdiParent;
-            ans.Dock = DockStyle.Fill;
-            ans.Show();
-            this.Hide();
+            int id = 0;
+            if (e.RowIndex < 0) return;
+            object obj = dataGridView1[0, e.RowIndex].Value;
+            if (obj == null) return;
+            if (int.TryParse(obj.ToString(), out id))
+            {
+                //rateTable.Clear();
+                DataSet dsTable = new DataSet();
+                OleDbDataAdapter cadp = new OleDbDataAdapter("select * from videoRate where id=" + id, _userConn);
+                cadp.Fill(dsTable);
+                DataRow dr = dsTable.Tables[0].Rows[0];
+                string v = (string)dr[4];
+                string r = (string)dr[5];
+                analys ans = new analys();
+                ans.setInfo(UserName.Text.Trim(), v, r);
+                //string sex=UserSex1.Checked
+                //ans.setMoreInfo()
+                ans.lastfrm = this;
+                ans.MdiParent = this.MdiParent;
+                ans.Dock = DockStyle.Fill;
+                ans.Show();
+                //this.Close();
+            }
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -243,9 +250,9 @@ namespace strike_subsystem
             VideoRateDisplay form_exam = new VideoRateDisplay();
             form_exam.lastfrm = this;
             form_exam.setUserInfo(UserName.Text.Trim());
-            
+
             form_exam.MdiParent = this.MdiParent;
-           
+
             form_exam.Dock = DockStyle.Fill;
             form_exam.Show();
             this.Hide();
