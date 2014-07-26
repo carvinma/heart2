@@ -231,10 +231,11 @@ namespace strike_subsystem
             ans.setInfo(UserName.Text.Trim(), v, r);
             //string sex=UserSex1.Checked
             //ans.setMoreInfo()
+            ans.lastfrm = this;
             ans.MdiParent = this.MdiParent;
             ans.Dock = DockStyle.Fill;
             ans.Show();
-            this.Close();
+            this.Hide();
         }
 
         private void button1_Click(object sender, EventArgs e)
