@@ -6,6 +6,7 @@ using System.Drawing;
 using System.Text;
 using System.Windows.Forms;
 using System.IO.Ports;
+using System.Threading.Tasks;
 
 namespace strike_subsystem
 {
@@ -105,6 +106,16 @@ namespace strike_subsystem
 
         private void Button_Exit_Click(object sender, EventArgs e)
         {
+            var mainfram = (Main_Fram)(this.MdiParent);
+            this.Close();
+            Task.Factory.StartNew(() =>
+            {
+                foreach (Form frm in mainfram.MdiChildren)
+                {
+                    frm.Close();
+                }
+            });
+
             Application.Exit();
         }
 
@@ -115,7 +126,7 @@ namespace strike_subsystem
 
         private void Button_Adjust_Click(object sender, EventArgs e)
         {
-            
+
         }
     }
 }
