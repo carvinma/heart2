@@ -74,6 +74,7 @@
   <ItemGroup>
     <Reference Include="DundasWinChart">
       <HintPath>..\..\..\heart2\strike-subsystem\bin\Debug\DundasWinChart.dll</HintPath>
+      <EmbedInteropTypes>False</EmbedInteropTypes>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core">
@@ -247,6 +248,18 @@
     <Content Include="bin\Debug\strike-subsystem.pdb" />
     <Content Include="bin\Release\strike-subsystem.exe" />
     <Content Include="bin\Release\strike-subsystem.pdb" />
+    <Content Include="data\gdfaes130275693988125000.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="data\胡博130255433700312500.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="data\胡博130275691220312500.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="data\胡博130275695787812500.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="images\27 %281%29.jpg">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -438,10 +451,10 @@
       <Lcid>0</Lcid>
       <WrapperTool>tlbimp</WrapperTool>
       <Isolated>False</Isolated>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
     </COMReference>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="data\" />
     <Folder Include="obj\Debug\Refactor\" />
     <Folder Include="obj\Release\" />
     <Folder Include="video\" />
